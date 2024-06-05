@@ -1,0 +1,91 @@
+package p1proyectolopezperrazo;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import flexihome.GrupoL_Administrator;
+import flexihome.GrupoL_User;
+public class Flexihome{
+    String redColor = "\033[31m";
+	String resetColor = "\033[0m";
+	public Flexihome() throws Exception{
+        Scanner sc = new Scanner(System.in);
+		int opc = 0;
+        do{
+            try{
+                line();
+				menuLogin();
+				opc = sc.nextInt();
+                switch(opc){
+                    case 1:
+					    login(sc);
+					break;
+				    case 2:
+					
+					break;
+				    case 3:
+					    System.out.println("Gracias por preferirnos...vuelve pronto");
+				    default:
+					    System.out.println(redColor+"Error: Opcion incorrecta, por favor intente de nuevo"+resetColor);	
+                }
+
+            }catch(InputMismatchException e) {
+				System.out.println(redColor+"Error: Opcion incorrecta, por favor intente de nuevo"+resetColor);
+			}
+        }while(opc !=3);
+    }
+    //metodo para el menu principal
+	public void menuLogin() {
+		System.out.println("*                      BIENVIDO/A A FLEXIHOME                      *");
+		line();
+		System.out.println("1. Iniciar Sesion"
+				+"\n2. Registrarse"
+				+ "\n3. Salir");
+		System.out.println("Por favor, ingrese una opcion");
+	}
+
+    //metodo para logearse como administrador o como cliente
+	public void login(Scanner sc) {
+		GrupoL_Administrator administrator = new GrupoL_Administrator();
+		GrupoL_User user = new GrupoL_User();
+		line();
+		System.out.println("*                            FLEXIHOME                            *");
+		line();
+		String verification;
+		String date;
+		sc.nextLine();
+		do {
+			System.out.println("Por favor, escribe tu opcion");
+			System.out.print("Cliente o Administrador: ");
+			verification = sc.nextLine();
+			date = convert(verification);
+			if(!comparison(date)) {
+				System.out.println(redColor+"Error: Escritura incorrecta"+resetColor);
+			}
+		}while(!comparison(date));
+		if(convert(verification).equals("cliente")){
+			verification = "Cliente.json";		
+			//user.studentActions(verification);
+		}else if(convert(verification).equals("administrador")) {
+			verification = "Administrador.json";
+			//administrador.studentActions(verification);
+		}
+	}
+    
+    //metodo para ver si dos cadenas son iguales
+	public boolean comparison(String cadena) {
+	   if(cadena.equals("cliente") || cadena.equals("administrador")){
+		   return true;
+		}
+	   return false;
+    }
+	
+	//Convertir una cadena a minusculas
+    public String convert(String data){
+        return data.toLowerCase();
+    }
+
+	public static void line() {
+		System.out.println("********************************************************************");
+		
+	}
+}
